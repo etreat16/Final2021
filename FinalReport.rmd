@@ -30,21 +30,52 @@ Males <- filter(Covid91, sex == "Man")
 
 ##Barplot
 ```{r}
-barchartGC(~treatment + infected ,data=Males)
-barchartGC(~treatment + infected,data=Males, type="percent")
+barchartGC(~ infected + treatment,data=Males)
+barchartGC(~infected + treatment,data=Males, type="percent")
 ```
 
   
-In this barplot, you can see that males taking the placebo and taking the drug are almost equally healthy. Whereas more males got sick when taking the placebo vs the drug.  
+In this barplot, you can see that males taking the placebo got much more sick vs the males taking the drug. About 50% of males taking the drug got sick vs about 66% of males taking the placebo got sick.  
 
 
 
 ##Numerical Results
 
 ```{r}
-
+table1 <- xtabs(~infected + treatment, data=Males)
+rowPerc(table1)
+colPerc(table1)
 ```
 
+  
+In our numerical results, you can see about 95 percent of men taking the drug remained healthy, where 91.33% of men taking the placebo stayed healthy. That means from this result we can assume the drug is about 4.23% more effective.
+
+
+##Inferential results
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+Malesmod <- fisher.test(table1)
+```
+
+
+From our inferential results you can see that almost DOUBLE of the men taking the placebo got sick vs the amount of men taking the drug, therefore we can further conclude that the drug is more effective. Our p-value came in at 0.00000000000000022 which is very very small, this will support our decision in rejecting the null hypothesis. 
+
+##calculating effectiveness 
+
+
+```{r}
+MaleEff <- Malesmod$estimate/(Malesmod$estimate +1)*100
+Malelow <- Malesmod$conf.int[1]/(Malesmod$conf.int[1]+1)*100
+Malehigh <- Malesmod$conf.int[2]/(Malesmod$conf.int[2]+1)*100
+
+options(digits=2)
+```
+
+
+The efficacy of this drug for males is `r MaleEff` the confidence interval for male efficacy is `r Malelow` to `r Malehigh` 
 
 
 # Females
