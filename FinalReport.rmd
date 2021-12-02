@@ -28,6 +28,24 @@ Males <- filter(Covid91, sex == "Man")
 
 
 
+##Barplot
+```{r}
+barchartGC(~treatment + infected ,data=Males)
+barchartGC(~treatment + infected,data=Males, type="percent")
+```
+
+  
+In this barplot, you can see that males taking the placebo and taking the drug are almost equally healthy. Whereas more males got sick when taking the placebo vs the drug.  
+
+
+
+##Numerical Results
+
+```{r}
+
+```
+
+
 
 # Females
 
