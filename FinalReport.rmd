@@ -111,10 +111,81 @@ When we look at our numerical results it shows that the females who got sick mad
   
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+Femalesmod <- fisher.test(table1)
+```
+
+With our p-value being 0.0006181, we must reject the null hypothesis, stating that there is a difference between our data. In our Chi-Squared test we can see the placebo is more effective than the drug, further supporting our conclusion.
+
+##calculating effectiveness 
+
+```{r}
+FemaleEff <-Femalesmod$estimate
+Femalelow <- Femalesmod$conf.int[1]
+Femalehigh <-Femalesmod$conf.int[2]
+options(digits=2)
+
+```
+
+The efficacy of this drug for females is `r FemaleEff` the confidence interval for female efficacy is `r Femalehigh` to `r Femalelow`
+
 
 
 
 # LGBTQ
+
+```{r}
+LGBTQ <- filter(Covid91, LGBTQ == "gay")
+```
+
+
+##Barplot
+
+```{r}
+barchartGC(~infected + infected ,data= LGBTQ)
+barchartGC(~infected + treatment,data= LGBTQ, type="percent")
+```
+
+In the barplot above you can clearly see that the LGBTQ community did not benefit from taking the drug. Over 60% of them got sick.
+
+
+##Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=LGBTQ)
+rowPerc(table1)
+colPerc(table1)
+```
+
+
+In our numerical results we can see that 71% of men and women in the LGBTQ community got sick from COVID that TOOK the drug. This is almost 3/4ths of the people being used in this analaysis. This drug is not for the LGBTQ community. 
+
+##Inferential results
+
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+LGBTQsmod <- fisher.test(table1)
+```
+
+
+According to the chis q test, we can see that the p-value is very small. This indicates the we need to reject the null hypothesis and that there is a negative difference between our data. This study showed us that more people taking the drug got sick vs the people that took the placebo.
+
+##calculating effectiveness 
+
+```{r}
+LGBTQEff <-LGBTQsmod$estimate
+LGBTQlow <- LGBTQsmod$conf.int[1]
+LGBTQhigh <-LGBTQsmod$conf.int[2]
+options(digits=2)
+```
+
+The efficacy of this drug for the LGBTQ community is `r LGBTQEff` the confidence interval for the LGBTQ efficacy is `r LGBTQlow` to `r LGBTQhigh`
 
 # Conclusions and recommendations
 
