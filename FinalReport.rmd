@@ -80,7 +80,39 @@ The efficacy of this drug for males is `r MaleEff` the confidence interval for m
 
 # Females
 
-# Drug Users
+```{r}
+Females <- filter(Covid91, sex == "Woman")
+```
+
+
+##Barplot
+
+```{r}
+barchartGC(~infected + infected ,data=Females)
+barchartGC(~infected + treatment,data=Females, type="percent")
+```
+  
+  
+  
+In the plot above, you can observe that the vaccine is not effective for "Females". The Drug portion indicates that out of those who are sick had taken the vaccine.   
+
+
+##Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=Females)
+rowPerc(table1)
+colPerc(table1)
+```
+
+
+  
+When we look at our numerical results it shows that the females who got sick made up 58.16% of our data vs the 42% of women who took the placebo . Upon reviewing the information, we can clearly see that the vaccine does not seem to be effective for Females. 
+  
+## Inferential results 
+
+
+
 
 # LGBTQ
 
