@@ -107,7 +107,7 @@ colPerc(table1)
 
 
   
-When we look at our numerical results it shows that the females who got sick made up 58.16% of our data vs the 42% of women who took the placebo . Upon reviewing the information, we can clearly see that the vaccine does not seem to be effective for Females. 
+When we look at our numerical results it shows that the females who took the drug made up 58.16% of our data vs the 42% of women who took the placebo . Upon reviewing the information, we can clearly see that the vaccine does not seem to be effective for Females. 
   
 ## Inferential results 
 
@@ -187,5 +187,83 @@ options(digits=2)
 
 The efficacy of this drug for the LGBTQ community is `r LGBTQEff` the confidence interval for the LGBTQ efficacy is `r LGBTQlow` to `r LGBTQhigh`
 
+
+##Drug Users
+
+```{r}
+DrugUser <- filter(Covid91, DrugUser == "yes")
+```
+
+
+
+##Barplot
+
+```{r}
+barchartGC(~infected + infected ,data= DrugUser)
+barchartGC(~infected + treatment,data= DrugUser, type="percent")
+```
+In the barplot above, it shows that the drug is pretty effective on the drug users. Out of the drug users who took the COVID drug, only about 35% got sick vs the placebo group who took had a higher rate of infection at about 63%. 
+
+##Numerical results
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=DrugUser)
+rowPerc(table1)
+colPerc(table1)
+```
+
+In our numerical results, we can get a much better look at our results. It shows that almost double of the drug users got sick then the drug users who took the COVID drug. This proves our point that the drug was effective for this group. 
+
+##Inferential Results
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+DrugUsersmod <- fisher.test(table1)
+```
+
+With this set of inferential results we can see we have a much more reasonable p-value then we have seen with our other studies. It still is significantly small, so we will reject the null hypothesis. We learned the drug users benefited from the drug vs the placebo. 
+
+##calculating effectiveness
+
+```{r}
+DrugUserEff <-DrugUsersmod$estimate
+DrugUserlow <- DrugUsersmod$conf.int[1]
+DrugUserhigh <-DrugUsersmod$conf.int[2]
+options(digits=2)
+```
+
+
+The efficacy of this drug is for drug users is `r DrugUserEff` the confidence interval for male efficacy is `r DrugUserlow` to `r DrugUserhigh`
+
 # Conclusions and recommendations
+
+Males:
+
+With our data set involving the males you could see that they benefited from taking the drug vs the placebo. 201 men got sick after taking the drug vs the 406 men who got sick after taking the placebo. That is double. Therefore with our male population we can conclude that the COVID drug benefited this group. Our p-value was small so we rejected the null hypothesis.
+The efficacy of this drug for males is `r MaleEff` the confidence interval for male efficacy is `r Malelow` to `r Malehigh`
+
+Females:
+
+In our female results we could see a much different story than with the males. 58% of the women who took the drug got sick vs the 42% who took the placebo. 196 women got sick who took the drug vs the 141 females who took the placebo who got sick. For our female data set we can say that the vaccine was not effective for this group.The p-value for females was also very small, so we rejected the null hypothesis. The efficacy of this drug for females is `r FemaleEff` the confidence interval for female efficacy is `r Femalehigh` to `r Femalelow`
+
+
+
+LGBTQ:
+
+For the LGBTQ group we found out that the drug was ineffective for them. the numerical results show 71% of those who got sick took the drug in comparison with the 29% of the sick people who taken the placebo. The p-value is pretty small so we have to reject the null hypothesis.. Also it shows that there is a significant contrast between the LGBQT who took the drug. In this particular case the difference is negative, there were more people who got sick while they took the drug. The efficacy of this drug for the LGBTQ community is `r LGBTQEff` the confidence interval for the LGBTQ efficacy is `r LGBTQlow` to `r LGBTQhigh`
+
+Drug Users:
+
+For the drug user group we were able to determine that the drug was pretty effective. The numerical results show is that only 33% of those who took the drug got infected in comparison to the 67% who those who took the placebo got infected. The p-value is 0.003, which is higher than our other groups, but not high enough so we have to reject it.  There is a difference between the drug users who took the drug and infected, and those who took the placebo.
+
+FINAL THOUGHT:
+In conclusion, we can say that the drug users and the males of our study were positively impacted by the drug, vs the females and the LGBTQ community who still got infected with the virus even after taking the drug. 
+
+
+
+
+
+
 
